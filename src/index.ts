@@ -43,6 +43,7 @@ async function main() {
   const warningsAsErrors = core.getBooleanInput('warnings-as-errors')
   const destination = await getDestination(selected, platform)
   const identity = getIdentity(core.getInput('code-sign-identity'), platform)
+  const xcconfig = core.getInput('xcconfig')
   const xcpretty = verbosity() == 'xcpretty'
 
   core.info(`» Selected Xcode ${selected}`)
@@ -198,6 +199,7 @@ async function main() {
       if (verbosity() == 'quiet') args.push('-quiet')
       if (configuration) args = args.concat(['-configuration', configuration])
       if (apiKey) args = args.concat(apiKey)
+      if (xcconfig) args = args.concat('-xcconfig', xcconfig)
 
       args = args.concat([
         '-resultBundlePath',
